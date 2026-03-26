@@ -3,10 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:preprx/components/custom_text.dart';
 import 'package:preprx/components/custom_spacer.dart';
 
-
-
 Widget customButton({
-  required BuildContext context,
+  BuildContext? context,
   required String text,
   required double fontSize,
   Function()? onPressed,
@@ -50,7 +48,7 @@ Widget customButton({
         // ),
         MaterialButton(
           height: height + 5,
-          onPressed: isLoading ? null : onPressed, 
+          onPressed: isLoading ? null : onPressed,
           padding: EdgeInsets.zero,
           highlightColor: Colors.transparent,
           shape: RoundedRectangleBorder(
@@ -108,7 +106,6 @@ Widget customButtonWithPrefixIcon({
     ),
     child: Stack(
       children: [
-       
         MaterialButton(
           height: height,
           onPressed: onPressed,
@@ -156,7 +153,7 @@ Widget simpleCustomButton({
   required double borderRadius,
   required bool isCircular,
   required FontWeight fontWeight,
-   bool isLoading = false,
+  bool isLoading = false,
 }) {
   return Container(
     width: width?.w,
@@ -169,7 +166,7 @@ Widget simpleCustomButton({
     ),
     child: MaterialButton(
       height: height + 5,
-      onPressed:isLoading ? null : onPressed,
+      onPressed: isLoading ? null : onPressed,
       padding: EdgeInsets.zero,
       highlightColor: Colors.transparent,
       shape: RoundedRectangleBorder(
@@ -178,21 +175,21 @@ Widget simpleCustomButton({
         ),
       ),
       child: Center(
-        child:isLoading
-                ? SizedBox(
-                    height: 22,
-                    width: 22,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: fontColor,
-                    ),
-                  )
-                : customText(
-          fontWeight: fontWeight,
-          fontSize: fontSize,
-          color: fontColor,
-          text: text,
-        ),
+        child: isLoading
+            ? SizedBox(
+                height: 22,
+                width: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: fontColor,
+                ),
+              )
+            : customText(
+                fontWeight: fontWeight,
+                fontSize: fontSize,
+                color: fontColor,
+                text: text,
+              ),
       ),
     ),
   );

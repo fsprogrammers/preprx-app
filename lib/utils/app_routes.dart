@@ -8,6 +8,8 @@ import 'package:preprx/view/study_zone/study_zone_pharmacology.dart';
 import 'package:preprx/view/study_zone/study_zone_behavioral_health.dart';
 import 'package:preprx/view/study_zone/study_zone_priority_practice.dart';
 import 'package:preprx/view/study_zone/study_zone_custom_quiz.dart';
+import 'package:preprx/view/study_zone/study_zone_quiz_question.dart';
+import 'package:preprx/view/study_zone/study_zone_flashcards.dart';
 import 'package:preprx/view/studyoption/study_option_view.dart';
 import 'package:preprx/view/splash/splash.dart';
 import 'package:preprx/view/splash/splash2.dart';
@@ -28,6 +30,8 @@ class AppRoutes {
   static const studyZoneBehavioralHealth = '/study-zone-behavioral-health';
   static const studyZonePriorityPractice = '/study-zone-priority-practice';
   static const studyZoneCustomQuiz = '/study-zone-custom-quiz';
+  static const studyZoneQuizQuestion = '/study-zone-quiz-question';
+  static const studyZoneFlashcards = '/study-zone-flashcards';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -70,6 +74,14 @@ final goRouter = GoRouter(
     GoRoute(
       path: AppRoutes.studyZoneCustomQuiz,
       builder: (context, state) => StudyZoneCustomQuizView(),
+    ),
+    GoRoute(
+      path: AppRoutes.studyZoneQuizQuestion,
+      builder: (context, state) => StudyZoneQuizQuestionView(),
+    ),
+    GoRoute(
+      path: AppRoutes.studyZoneFlashcards,
+      builder: (context, state) => StudyZoneFlashcardsView(),
     ),
   ],
 );

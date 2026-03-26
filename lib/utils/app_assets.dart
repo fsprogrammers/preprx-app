@@ -32,6 +32,9 @@ class AppImages {
   static String clinicalJudgmentCases =
       'assets/images/clinicaljudgmentcases.svg';
 
+  //flash card
+  static String hintBulb = 'assets/images/hintbulb.svg';
+
   //navbar
   static String homeFill = 'assets/images/homefill.svg';
   static String homeOutline = 'assets/images/homeoutline.svg';

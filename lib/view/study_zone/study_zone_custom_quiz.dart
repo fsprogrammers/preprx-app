@@ -6,6 +6,7 @@ import 'package:preprx/components/custom_gradient_background.dart';
 import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/components/custom_text.dart';
 import 'package:preprx/utils/app_colors.dart';
+import 'package:preprx/utils/app_routes.dart';
 
 class StudyZoneCustomQuizView extends StatefulWidget {
   const StudyZoneCustomQuizView({super.key});
@@ -323,7 +324,9 @@ class _StudyZoneCustomQuizViewState extends State<StudyZoneCustomQuizView> {
                           borderRadius: 20,
                           isCircular: true,
                           fontWeight: FontWeight.w600,
-                          onPressed: () {},
+                          onPressed: () {
+                            goRouter.push(AppRoutes.studyZoneQuizQuestion);
+                          },
                         ),
 
                         // Extra padding at bottom

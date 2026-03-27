@@ -7,6 +7,7 @@ import 'package:preprx/components/custom_gradient_background.dart';
 import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/components/custom_text.dart';
 import 'package:preprx/utils/app_assets.dart';
+import 'package:preprx/utils/app_routes.dart';
 import 'package:preprx/utils/app_colors.dart';
 import 'package:preprx/view/strategy_zone/widget/strategy_card.dart';
 
@@ -121,7 +122,9 @@ class StrategyZoneView extends StatelessWidget {
                             buildStrategyCard(
                               title: "Priority\nFramework",
                               icon: AppImages.priorityframe,
-                              onTap: () {},
+                              onTap: () {
+                                goRouter.push(AppRoutes.strategyZonePriorityFramework);
+                              },
                             ),
                             buildStrategyCard(
                               title: "Elimination\nTechniques",

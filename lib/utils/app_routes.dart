@@ -14,6 +14,7 @@ import 'package:preprx/view/studyoption/study_option_view.dart';
 import 'package:preprx/view/ask_michelle/ask_michelle_view.dart';
 import 'package:preprx/view/ask_michelle/ask_michelle_chat_view.dart';
 import 'package:preprx/view/strategy_zone/strategy_zone_view.dart';
+import 'package:preprx/view/strategy_zone/strategy_zone_priority_framework.dart';
 import 'package:preprx/view/splash/splash.dart';
 import 'package:preprx/view/splash/splash2.dart';
 
@@ -38,6 +39,7 @@ class AppRoutes {
   static const askMichelle = '/ask-michelle';
   static const askMichelleChat = '/ask-michelle-chat';
   static const strategyZone = '/strategy-zone';
+  static const strategyZonePriorityFramework = '/strategy-zone-priority-framework';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -100,6 +102,10 @@ final goRouter = GoRouter(
     GoRoute(
       path: AppRoutes.strategyZone,
       builder: (context, state) => StrategyZoneView(),
+    ),
+    GoRoute(
+      path: AppRoutes.strategyZonePriorityFramework,
+      builder: (context, state) => StrategyZonePriorityFrameworkView(),
     ),
   ],
 );

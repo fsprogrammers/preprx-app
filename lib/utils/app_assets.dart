@@ -45,6 +45,11 @@ class AppImages {
   static String patient = 'assets/images/patient.svg';
   static String mindset = 'assets/images/mindset.svg';
 
+  //priority framework
+  static String lungs = 'assets/images/lungs.svg';
+  static String pyramids = 'assets/images/pyramids.svg';
+  static String process = 'assets/images/process.svg';
+
   //navbar
   static String homeFill = 'assets/images/homefill.svg';
   static String homeOutline = 'assets/images/homeoutline.svg';

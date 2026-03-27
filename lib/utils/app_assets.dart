@@ -50,6 +50,17 @@ class AppImages {
   static String pyramids = 'assets/images/pyramids.svg';
   static String process = 'assets/images/process.svg';
 
+  //langauge decoder
+  static String close = 'assets/images/close.svg';
+  static String like = 'assets/images/like.svg';
+  static String warning = 'assets/images/warning.svg';
+
+  //priority patient techniques
+  static String confused = 'assets/images/confused.svg';
+  static String wheezing = 'assets/images/wheezing.svg';
+  static String lowblood = 'assets/images/lowblood.svg';
+  static String breathing = 'assets/images/breathing.svg';
+
   //navbar
   static String homeFill = 'assets/images/homefill.svg';
   static String homeOutline = 'assets/images/homeoutline.svg';

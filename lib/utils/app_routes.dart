@@ -15,6 +15,14 @@ import 'package:preprx/view/ask_michelle/ask_michelle_view.dart';
 import 'package:preprx/view/ask_michelle/ask_michelle_chat_view.dart';
 import 'package:preprx/view/strategy_zone/strategy_zone_view.dart';
 import 'package:preprx/view/strategy_zone/strategy_zone_priority_framework.dart';
+import 'package:preprx/view/strategy_zone/strategy_zone_elimination.dart';
+import 'package:preprx/view/strategy_zone/strategy_zone_language_decoder.dart';
+import 'package:preprx/view/strategy_zone/strategy_zone_priority_patients.dart';
+import 'package:preprx/view/strategy_zone/strategy_zone_critical_thinking.dart';
+import 'package:preprx/view/strategy_zone/strategy_zone_flagged_questions.dart';
+import 'package:preprx/view/strategy_zone/strategy_zone_pharm_hacks.dart';
+import 'package:preprx/view/strategy_zone/strategy_zone_sata_bootcamp.dart';
+import 'package:preprx/view/strategy_zone/strategy_zone_mindset.dart';
 import 'package:preprx/view/splash/splash.dart';
 import 'package:preprx/view/splash/splash2.dart';
 
@@ -40,6 +48,14 @@ class AppRoutes {
   static const askMichelleChat = '/ask-michelle-chat';
   static const strategyZone = '/strategy-zone';
   static const strategyZonePriorityFramework = '/strategy-zone-priority-framework';
+  static const strategyZoneElimination = '/strategy-zone-elimination';
+  static const strategyZoneLanguageDecoder = '/strategy-zone-language-decoder';
+  static const strategyZonePriorityPatients = '/strategy-zone-priority-patients';
+  static const strategyZoneCriticalThinking = '/strategy-zone-critical-thinking';
+  static const strategyZoneFlaggedQuestions = '/strategy-zone-flagged-questions';
+  static const strategyZonePharmHacks = '/strategy-zone-pharm-hacks';
+  static const strategyZoneSataBootcamp = '/strategy-zone-sata-bootcamp';
+  static const strategyZoneMindset = '/strategy-zone-mindset';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -106,6 +122,38 @@ final goRouter = GoRouter(
     GoRoute(
       path: AppRoutes.strategyZonePriorityFramework,
       builder: (context, state) => StrategyZonePriorityFrameworkView(),
+    ),
+    GoRoute(
+      path: AppRoutes.strategyZoneElimination,
+      builder: (context, state) => StrategyZoneEliminationView(),
+    ),
+    GoRoute(
+      path: AppRoutes.strategyZoneLanguageDecoder,
+      builder: (context, state) => StrategyZoneLanguageDecoderView(),
+    ),
+    GoRoute(
+      path: AppRoutes.strategyZonePriorityPatients,
+      builder: (context, state) => StrategyZonePriorityPatientsView(),
+    ),
+    GoRoute(
+      path: AppRoutes.strategyZoneCriticalThinking,
+      builder: (context, state) => StrategyZoneCriticalThinkingView(),
+    ),
+    GoRoute(
+      path: AppRoutes.strategyZoneFlaggedQuestions,
+      builder: (context, state) => StrategyZoneFlaggedQuestionsView(),
+    ),
+    GoRoute(
+      path: AppRoutes.strategyZonePharmHacks,
+      builder: (context, state) => StrategyZonePharmHacksView(),
+    ),
+    GoRoute(
+      path: AppRoutes.strategyZoneSataBootcamp,
+      builder: (context, state) => StrategyZoneSataBootcampView(),
+    ),
+    GoRoute(
+      path: AppRoutes.strategyZoneMindset,
+      builder: (context, state) => StrategyZoneMindsetView(),
     ),
   ],
 );

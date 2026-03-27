@@ -123,43 +123,69 @@ class StrategyZoneView extends StatelessWidget {
                               title: "Priority\nFramework",
                               icon: AppImages.priorityframe,
                               onTap: () {
-                                goRouter.push(AppRoutes.strategyZonePriorityFramework);
+                                goRouter.push(
+                                  AppRoutes.strategyZonePriorityFramework,
+                                );
                               },
                             ),
                             buildStrategyCard(
                               title: "Elimination\nTechniques",
                               icon: AppImages.elimination,
-                              onTap: () {},
+                              onTap: () {
+                                goRouter.push(
+                                  AppRoutes.strategyZoneElimination,
+                                );
+                              },
                             ),
                             buildStrategyCard(
                               title: "NCLEX\nLanguage\nDecoder",
                               icon: AppImages.nclex,
-                              onTap: () {},
+                              onTap: () {
+                                goRouter.push(
+                                  AppRoutes.strategyZoneLanguageDecoder,
+                                );
+                              },
                             ),
                             buildStrategyCard(
                               title: "SATA Boot\nCamp",
                               icon: AppImages.sata,
-                              onTap: () {},
+                              onTap: () {
+                                goRouter.push(
+                                  AppRoutes.strategyZoneSataBootcamp,
+                                );
+                              },
                             ),
                             buildStrategyCard(
-                              title: "Critical Thinking\nDrills",
+                              title: "Critical\nThinking\nDrills",
                               icon: AppImages.critical,
-                              onTap: () {},
+                              onTap: () {
+                                goRouter.push(
+                                  AppRoutes.strategyZoneCriticalThinking,
+                                );
+                              },
                             ),
                             buildStrategyCard(
                               title: "Priority\nPatients",
                               icon: AppImages.patient,
-                              onTap: () {},
+                              onTap: () {
+                                goRouter.push(
+                                  AppRoutes.strategyZonePriorityPatients,
+                                );
+                              },
                             ),
                             buildStrategyCard(
                               title: "Pharm\nShortcuts",
                               icon: AppImages.shortcut,
-                              onTap: () {},
+                              onTap: () {
+                                goRouter.push(AppRoutes.strategyZonePharmHacks);
+                              },
                             ),
                             buildStrategyCard(
                               title: "Test Day\nMindset",
                               icon: AppImages.mindset,
-                              onTap: () {},
+                              onTap: () {
+                                goRouter.push(AppRoutes.strategyZoneMindset);
+                              },
                             ),
                           ],
                         ),

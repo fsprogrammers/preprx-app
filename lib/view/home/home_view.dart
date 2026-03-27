@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:preprx/components/custom_appbar.dart';
 import 'package:preprx/components/custom_buildtile_icon.dart';
 import 'package:preprx/components/custom_button.dart';
+import 'package:preprx/components/custom_drawer.dart';
 import 'package:preprx/components/custom_gradient_background.dart';
 import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/components/custom_text.dart';
@@ -19,42 +21,45 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: Colors.transparent,
+      drawer: const CustomDrawer(),
       body: GradientBackground(
         child: SafeArea(
           bottom: false,
-          child: Column(
-            children: [
-              verticalSpacer(height: 10),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
 
-              // Custom Top App Bar
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Menu Icon
-                    iconButton(
-                      icon: AppImages.drawer,
-                      onPressed: () {},
-                      width: 18,
-                      height: 12,
-                    ),
+            child: Column(
+              children: [
+                verticalSpacer(height: 10),
 
-                    // Center Logo
-                    customTopLogo(),
+                // Custom Top App Bar
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 24.w),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       // Menu Icon
+                //       iconButton(
+                //         icon: AppImages.drawer,
+                //         onPressed: () {},
+                //         width: 18,
+                //         height: 12,
+                //       ),
 
-                    iconButton(icon: AppImages.person, onPressed: () {}),
-                  ],
-                ),
-              ),
+                //       // Center Logo
+                //       customTopLogo(),
 
-              verticalSpacer(height: 24),
+                //       iconButton(icon: AppImages.person, onPressed: () {}),
+                //     ],
+                //   ),
+                // ),
+                customAppBar(isSearch: false),
 
-              // Scrollable Content
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.w),
+                verticalSpacer(height: 24),
+
+                // Scrollable Content
+                Expanded(
+                  child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -273,8 +278,8 @@ class HomeView extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

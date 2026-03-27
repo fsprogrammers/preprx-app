@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:preprx/components/custom_appbar.dart';
+import 'package:preprx/components/custom_drawer.dart';
 import 'package:preprx/components/custom_gradient_background.dart';
 import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/components/custom_text.dart';
@@ -60,46 +61,25 @@ class StudyZonePharmacologyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomDrawer(),
       body: GradientBackground(
         child: SafeArea(
           bottom: false,
-          child: Column(
-            children: [
-              verticalSpacer(height: 10),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: Column(
+              children: [
+                // Top App Bar
+                customAppBar(isBack: true),
+                verticalSpacer(height: 8),
 
-              // Top App Bar
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: customAppBar(),
-              ),
-
-              verticalSpacer(height: 16),
-
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.w),
+                Expanded(
+                  child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Back Button
-                        InkWell(
-                          onTap: () {
-                            goRouter.pop();
-                          },
-                          borderRadius: BorderRadius.circular(8.r),
-                          child: SvgPicture.asset(
-                            AppImages.back,
-                            width: 24.w,
-                            height: 24.h,
-                            colorFilter: const ColorFilter.mode(
-                              Colors.white,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                        ),
-
-                        verticalSpacer(height: 24),
+                        verticalSpacer(height: 16),
 
                         // Header Box
                         Container(
@@ -213,8 +193,8 @@ class StudyZonePharmacologyView extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

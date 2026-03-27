@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:preprx/components/custom_appbar.dart';
 import 'package:preprx/components/custom_buildtile_icon.dart';
+import 'package:preprx/components/custom_drawer.dart';
 import 'package:preprx/components/custom_gradient_background.dart';
 import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/components/custom_text.dart';
@@ -19,6 +20,7 @@ class StudyZoneView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomDrawer(),
       body: GradientBackground(
         child: SafeArea(
           bottom: false,

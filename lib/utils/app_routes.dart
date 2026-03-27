@@ -11,6 +11,9 @@ import 'package:preprx/view/study_zone/study_zone_custom_quiz.dart';
 import 'package:preprx/view/study_zone/study_zone_quiz_question.dart';
 import 'package:preprx/view/study_zone/study_zone_flashcards.dart';
 import 'package:preprx/view/studyoption/study_option_view.dart';
+import 'package:preprx/view/ask_michelle/ask_michelle_view.dart';
+import 'package:preprx/view/ask_michelle/ask_michelle_chat_view.dart';
+import 'package:preprx/view/strategy_zone/strategy_zone_view.dart';
 import 'package:preprx/view/splash/splash.dart';
 import 'package:preprx/view/splash/splash2.dart';
 
@@ -32,6 +35,9 @@ class AppRoutes {
   static const studyZoneCustomQuiz = '/study-zone-custom-quiz';
   static const studyZoneQuizQuestion = '/study-zone-quiz-question';
   static const studyZoneFlashcards = '/study-zone-flashcards';
+  static const askMichelle = '/ask-michelle';
+  static const askMichelleChat = '/ask-michelle-chat';
+  static const strategyZone = '/strategy-zone';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -82,6 +88,18 @@ final goRouter = GoRouter(
     GoRoute(
       path: AppRoutes.studyZoneFlashcards,
       builder: (context, state) => StudyZoneFlashcardsView(),
+    ),
+    GoRoute(
+      path: AppRoutes.askMichelle,
+      builder: (context, state) => AskMichelleView(),
+    ),
+    GoRoute(
+      path: AppRoutes.askMichelleChat,
+      builder: (context, state) => AskMichelleChatView(),
+    ),
+    GoRoute(
+      path: AppRoutes.strategyZone,
+      builder: (context, state) => StrategyZoneView(),
     ),
   ],
 );

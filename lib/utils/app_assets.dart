@@ -35,6 +35,16 @@ class AppImages {
   //flash card
   static String hintBulb = 'assets/images/hintbulb.svg';
 
+  //strategy zone
+  static String nclex = 'assets/images/nclex.svg';
+  static String sata = 'assets/images/sata.svg';
+  static String critical = 'assets/images/critical.svg';
+  static String shortcut = 'assets/images/shortcut.svg';
+  static String elimination = 'assets/images/elimination.svg';
+  static String priorityframe = 'assets/images/priorityframe.svg';
+  static String patient = 'assets/images/patient.svg';
+  static String mindset = 'assets/images/mindset.svg';
+
   //navbar
   static String homeFill = 'assets/images/homefill.svg';
   static String homeOutline = 'assets/images/homeoutline.svg';
@@ -48,4 +58,14 @@ class AppImages {
   static String mindRxFill = 'assets/images/mindfill.svg';
   static String progressOutline = 'assets/images/progressoutline.svg';
   static String progressFill = 'assets/images/progressfill.svg';
+
+  //drawer
+  static String logout = 'assets/images/logout.svg';
+  static String share = 'assets/images/share.svg';
+  static String calendar = 'assets/images/calendar.svg';
+  static String flagged = 'assets/images/flagged.svg';
+  static String flash = 'assets/images/flash.svg';
+  static String resource = 'assets/images/resource.svg';
+  static String studyzone = 'assets/images/studyzone.svg';
+  static String help = 'assets/images/help.svg';
 }

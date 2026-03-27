@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:preprx/components/custom_appbar.dart';
 import 'package:preprx/components/custom_button.dart';
+import 'package:preprx/components/custom_drawer.dart';
 import 'package:preprx/components/custom_gradient_background.dart';
 import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/components/custom_text.dart';
@@ -68,6 +69,7 @@ class _StudyZoneAllTopicsViewState extends State<StudyZoneALlTopicsView> {
   Widget build(BuildContext context) {
     return GradientBackground(
       child: Scaffold(
+        drawer: const CustomDrawer(),
         body: GradientBackground(
           child: SafeArea(
             bottom: false,

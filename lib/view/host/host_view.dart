@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:preprx/utils/app_assets.dart';
 import 'package:preprx/utils/app_colors.dart';
 import 'package:preprx/view/home/home_view.dart';
+import 'package:preprx/view/strategy_zone/strategy_zone_view.dart';
 import 'package:preprx/view/study_zone/study_zone_view.dart';
 
 class HostView extends StatefulWidget {
@@ -20,7 +21,7 @@ class _HostViewState extends State<HostView> {
   final List<Widget> _screens = [
     const HomeView(),
     const StudyZoneView(), // Study Zone
-    const SizedBox(), // Strategy Zone placeholder
+    const StrategyZoneView(), // Strategy Zone placeholder
     const SizedBox(), // Community placeholder
     const SizedBox(), // Mind Rx placeholder
     const SizedBox(), // Progress placeholder
@@ -45,12 +46,42 @@ class _HostViewState extends State<HostView> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              _buildNavItem(AppImages.homeFill, AppImages.homeOutline, "Home", 0),
-              _buildNavItem(AppImages.studyZoneFill, AppImages.studyZoneOutline, "Study zone", 1),
-              _buildNavItem(AppImages.strategyZoneFill, AppImages.strategyZoneOutline, "Strategy zone", 2),
-              _buildNavItem(AppImages.communityFill, AppImages.communityOutline, "Community", 3),
-              _buildNavItem(AppImages.mindRxFill, AppImages.mindRxOutline, "Mind Rx", 4),
-              _buildNavItem(AppImages.progressFill, AppImages.progressOutline, "Progress", 5),
+              _buildNavItem(
+                AppImages.homeFill,
+                AppImages.homeOutline,
+                "Home",
+                0,
+              ),
+              _buildNavItem(
+                AppImages.studyZoneFill,
+                AppImages.studyZoneOutline,
+                "Study zone",
+                1,
+              ),
+              _buildNavItem(
+                AppImages.strategyZoneFill,
+                AppImages.strategyZoneOutline,
+                "Strategy zone",
+                2,
+              ),
+              _buildNavItem(
+                AppImages.communityFill,
+                AppImages.communityOutline,
+                "Community",
+                3,
+              ),
+              _buildNavItem(
+                AppImages.mindRxFill,
+                AppImages.mindRxOutline,
+                "Mind Rx",
+                4,
+              ),
+              _buildNavItem(
+                AppImages.progressFill,
+                AppImages.progressOutline,
+                "Progress",
+                5,
+              ),
             ],
           ),
         ),
@@ -58,7 +89,12 @@ class _HostViewState extends State<HostView> {
     );
   }
 
-  Widget _buildNavItem(String fillAsset, String outlineAsset, String label, int index) {
+  Widget _buildNavItem(
+    String fillAsset,
+    String outlineAsset,
+    String label,
+    int index,
+  ) {
     bool isSelected = _currentIndex == index;
     return GestureDetector(
       onTap: () {
@@ -72,7 +108,7 @@ class _HostViewState extends State<HostView> {
         children: [
           SvgPicture.asset(
             isSelected ? fillAsset : outlineAsset,
-            width:isSelected? 24.w : 18.w,
+            width: isSelected ? 24.w : 18.w,
             height: isSelected ? 24.h : 18.h,
             colorFilter: ColorFilter.mode(
               isSelected ? AppColors.gold : Colors.white,
@@ -89,7 +125,7 @@ class _HostViewState extends State<HostView> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-          ]
+          ],
         ],
       ),
     );

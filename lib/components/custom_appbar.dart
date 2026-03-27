@@ -7,7 +7,12 @@ import 'package:preprx/utils/app_assets.dart';
 import 'package:preprx/utils/app_routes.dart';
 import 'package:preprx/view/home/widget/icon_button.dart';
 
-Widget customAppBar({bool? isBack}) {
+Widget customAppBar({
+  bool? isBack,
+  bool? isSearch = true,
+  bool? isProfile = true,
+  bool? isLogo = true,
+}) {
   return // Custom Top App Bar
   Column(
     mainAxisSize: MainAxisSize.min,
@@ -20,41 +25,54 @@ Widget customAppBar({bool? isBack}) {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              iconButton(
-                icon: AppImages.drawer,
-                onPressed: () {},
-                containerHeight: 32,
-                containerWidth: 32,
-                width: 18,
-                height: 12,
+              Builder(
+                builder: (context) {
+                  return iconButton(
+                    icon: AppImages.drawer,
+                    onPressed: () {
+                      if (Scaffold.of(context).hasDrawer) {
+                        Scaffold.of(context).openDrawer();
+                      }
+                    },
+                    containerHeight: 32,
+                    containerWidth: 32,
+                    width: 18,
+                    height: 12,
+                  );
+                },
               ),
               horizontalSpacer(width: 6),
-              iconButton(
-                containerHeight: 32,
-                containerWidth: 32,
-                icon: AppImages.search,
-                onPressed: () {},
-                width: 18,
-                height: 18,
-              ),
+              isSearch == true
+                  ? iconButton(
+                      containerHeight: 32,
+                      containerWidth: 32,
+                      icon: AppImages.search,
+                      onPressed: () {},
+                      width: 18,
+                      height: 18,
+                    )
+                  : SizedBox.shrink(),
             ],
           ),
           Spacer(),
 
           // Center Logo
-          customTopLogo(),
+          isLogo == true ? customTopLogo() : SizedBox.shrink(),
           Spacer(),
           // Right icon (Profile)
-          iconButton(
-            icon: AppImages.person,
-            onPressed: () {},
-            containerHeight: 32,
-            containerWidth: 32,
-            width: 18,
-            height: 18,
-          ),
+          isProfile == true
+              ? iconButton(
+                  icon: AppImages.person,
+                  onPressed: () {},
+                  containerHeight: 32,
+                  containerWidth: 32,
+                  width: 18,
+                  height: 18,
+                )
+              : SizedBox.shrink(),
         ],
       ),
+      isLogo == false ? verticalSpacer(height: 16) : SizedBox.shrink(),
       isBack == true
           ? InkWell(
               onTap: () {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:preprx/components/custom_appbar.dart';
 import 'package:preprx/components/custom_button.dart';
+import 'package:preprx/components/custom_drawer.dart';
 import 'package:preprx/components/custom_gradient_background.dart';
 import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/components/custom_text.dart';
@@ -34,6 +35,7 @@ class _StudyZoneQuizQuestionViewState extends State<StudyZoneQuizQuestionView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomDrawer(),
       body: GradientBackground(
         child: SafeArea(
           bottom: false,
@@ -280,46 +282,52 @@ class _StudyZoneQuizQuestionViewState extends State<StudyZoneQuizQuestionView> {
                           verticalSpacer(height: 16),
 
                           // Ask Michelle
-                          Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(
-                              vertical: 24.h,
-                              horizontal: 24.w,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(24.r),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    customText(
-                                      text: "Need a clearer explanation?",
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      color: AppColors.bodytext,
-                                      textAlign: TextAlign.right,
-                                    ),
-                                    customText(
-                                      text: "Ask Michelle",
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      color: AppColors.bodytext,
-                                      textAlign: TextAlign.right,
-                                    ),
-                                  ],
-                                ),
-                                horizontalSpacer(width: 12),
-                                Icon(
-                                  Icons
-                                      .messenger, // Closest matching standard icon for chat bubble
-                                  color: AppColors.magenta,
-                                  size: 40.sp,
-                                ),
-                              ],
+                          InkWell(
+                            onTap: () {
+                              goRouter.push(AppRoutes.askMichelle);
+                            },
+                            borderRadius: BorderRadius.circular(24.r),
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                vertical: 24.h,
+                                horizontal: 24.w,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(24.r),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      customText(
+                                        text: "Need a clearer explanation?",
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                        color: AppColors.bodytext,
+                                        textAlign: TextAlign.right,
+                                      ),
+                                      customText(
+                                        text: "Ask Michelle",
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12,
+                                        color: AppColors.bodytext,
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    ],
+                                  ),
+                                  horizontalSpacer(width: 12),
+                                  Icon(
+                                    Icons
+                                        .messenger, // Closest matching standard icon for chat bubble
+                                    color: AppColors.magenta,
+                                    size: 40.sp,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

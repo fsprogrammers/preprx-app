@@ -23,6 +23,16 @@ import 'package:preprx/view/strategy_zone/strategy_zone_flagged_questions.dart';
 import 'package:preprx/view/strategy_zone/strategy_zone_pharm_hacks.dart';
 import 'package:preprx/view/strategy_zone/strategy_zone_sata_bootcamp.dart';
 import 'package:preprx/view/strategy_zone/strategy_zone_mindset.dart';
+import 'package:preprx/view/community/motivation_monday_view.dart';
+import 'package:preprx/view/community/study_buddy_requests_view.dart';
+import 'package:preprx/view/community/create_study_request_view.dart';
+import 'package:preprx/view/community/psych_nursing_tips_view.dart';
+import 'package:preprx/view/community/ask_question_view.dart';
+import 'package:preprx/view/mind_rx/visualization_room_view.dart';
+import 'package:preprx/view/mind_rx/scripting_space_view.dart';
+import 'package:preprx/view/mind_rx/subliminal_study_view.dart';
+import 'package:preprx/view/mind_rx/manifestation_calendar_view.dart';
+import 'package:preprx/view/mind_rx/add_affirmation_view.dart';
 import 'package:preprx/view/splash/splash.dart';
 import 'package:preprx/view/splash/splash2.dart';
 
@@ -47,15 +57,29 @@ class AppRoutes {
   static const askMichelle = '/ask-michelle';
   static const askMichelleChat = '/ask-michelle-chat';
   static const strategyZone = '/strategy-zone';
-  static const strategyZonePriorityFramework = '/strategy-zone-priority-framework';
+  static const strategyZonePriorityFramework =
+      '/strategy-zone-priority-framework';
   static const strategyZoneElimination = '/strategy-zone-elimination';
   static const strategyZoneLanguageDecoder = '/strategy-zone-language-decoder';
-  static const strategyZonePriorityPatients = '/strategy-zone-priority-patients';
-  static const strategyZoneCriticalThinking = '/strategy-zone-critical-thinking';
-  static const strategyZoneFlaggedQuestions = '/strategy-zone-flagged-questions';
+  static const strategyZonePriorityPatients =
+      '/strategy-zone-priority-patients';
+  static const strategyZoneCriticalThinking =
+      '/strategy-zone-critical-thinking';
+  static const strategyZoneFlaggedQuestions =
+      '/strategy-zone-flagged-questions';
   static const strategyZonePharmHacks = '/strategy-zone-pharm-hacks';
   static const strategyZoneSataBootcamp = '/strategy-zone-sata-bootcamp';
   static const strategyZoneMindset = '/strategy-zone-mindset';
+  static const motivationMonday = '/motivation-monday';
+  static const studyBuddyRequests = '/study-buddy-requests';
+  static const createStudyRequest = '/create-study-request';
+  static const psychNursingTips = '/psych-nursing-tips';
+  static const askQuestion = '/ask-question';
+  static const visualizationRoom = '/visualization-room';
+  static const scriptingSpace = '/scripting-space';
+  static const subliminalStudy = '/subliminal-study';
+  static const manifestationCalendar = '/manifestation-calendar';
+  static const addAffirmation = '/add-affirmation';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -154,6 +178,46 @@ final goRouter = GoRouter(
     GoRoute(
       path: AppRoutes.strategyZoneMindset,
       builder: (context, state) => StrategyZoneMindsetView(),
+    ),
+    GoRoute(
+      path: AppRoutes.motivationMonday,
+      builder: (context, state) => MotivationMondayView(),
+    ),
+    GoRoute(
+      path: AppRoutes.studyBuddyRequests,
+      builder: (context, state) => StudyBuddyRequestsView(),
+    ),
+    GoRoute(
+      path: AppRoutes.createStudyRequest,
+      builder: (context, state) => CreateStudyRequestView(),
+    ),
+    GoRoute(
+      path: AppRoutes.psychNursingTips,
+      builder: (context, state) => PsychNursingTipsView(),
+    ),
+    GoRoute(
+      path: AppRoutes.askQuestion,
+      builder: (context, state) => AskQuestionView(),
+    ),
+    GoRoute(
+      path: AppRoutes.visualizationRoom,
+      builder: (context, state) => VisualizationRoomView(),
+    ),
+    GoRoute(
+      path: AppRoutes.scriptingSpace,
+      builder: (context, state) => ScriptingSpaceView(),
+    ),
+    GoRoute(
+      path: AppRoutes.subliminalStudy,
+      builder: (context, state) => SubliminalStudyView(),
+    ),
+    GoRoute(
+      path: AppRoutes.manifestationCalendar,
+      builder: (context, state) => ManifestationCalendarView(),
+    ),
+    GoRoute(
+      path: AppRoutes.addAffirmation,
+      builder: (context, state) => AddAffirmationView(),
     ),
   ],
 );

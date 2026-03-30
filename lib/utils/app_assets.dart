@@ -61,6 +61,26 @@ class AppImages {
   static String lowblood = 'assets/images/lowblood.svg';
   static String breathing = 'assets/images/breathing.svg';
 
+  //community
+  static String studybuddy = 'assets/images/studybuddy.svg';
+  static String motivation = 'assets/images/motivation.svg';
+  static String message = 'assets/images/message.svg';
+  static String favourite = 'assets/images/favourite.svg';
+  static String camera = 'assets/images/camera.svg';
+
+  //mindRX
+  static String emoji = 'assets/images/emoji.svg';
+  static String manifestation = 'assets/images/manifestation.svg';
+  static String morning = 'assets/images/morning.svg';
+  static String scription = 'assets/images/scription.svg';
+  static String subliminal = 'assets/images/subliminal.svg';
+
+  //visulization room
+  static String videobg = 'assets/images/videobg.png';
+
+  //scription space
+  static String tick = 'assets/images/tick.svg';
+
   //navbar
   static String homeFill = 'assets/images/homefill.svg';
   static String homeOutline = 'assets/images/homeoutline.svg';

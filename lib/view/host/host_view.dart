@@ -8,6 +8,9 @@ import 'package:preprx/view/home/home_view.dart';
 import 'package:preprx/view/strategy_zone/strategy_zone_view.dart';
 import 'package:preprx/view/study_zone/study_zone_view.dart';
 
+import 'package:preprx/view/community/community_view.dart';
+import 'package:preprx/view/mind_rx/mind_rx_view.dart';
+
 class HostView extends StatefulWidget {
   const HostView({super.key});
 
@@ -22,8 +25,8 @@ class _HostViewState extends State<HostView> {
     const HomeView(),
     const StudyZoneView(), // Study Zone
     const StrategyZoneView(), // Strategy Zone placeholder
-    const SizedBox(), // Community placeholder
-    const SizedBox(), // Mind Rx placeholder
+    const CommunityView(), // Community View
+    const MindRxView(), // Mind Rx view
     const SizedBox(), // Progress placeholder
   ];
 

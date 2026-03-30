@@ -10,6 +10,7 @@ import 'package:preprx/view/study_zone/study_zone_priority_practice.dart';
 import 'package:preprx/view/study_zone/study_zone_custom_quiz.dart';
 import 'package:preprx/view/study_zone/study_zone_quiz_question.dart';
 import 'package:preprx/view/study_zone/study_zone_flashcards.dart';
+import 'package:preprx/view/study_zone/study_zone_view.dart';
 import 'package:preprx/view/studyoption/study_option_view.dart';
 import 'package:preprx/view/ask_michelle/ask_michelle_view.dart';
 import 'package:preprx/view/ask_michelle/ask_michelle_chat_view.dart';
@@ -33,6 +34,10 @@ import 'package:preprx/view/mind_rx/scripting_space_view.dart';
 import 'package:preprx/view/mind_rx/subliminal_study_view.dart';
 import 'package:preprx/view/mind_rx/manifestation_calendar_view.dart';
 import 'package:preprx/view/mind_rx/add_affirmation_view.dart';
+import 'package:preprx/view/progress/progress_view.dart';
+import 'package:preprx/view/progress/treatment_plan_view.dart';
+import 'package:preprx/view/profile/profile_view.dart';
+import 'package:preprx/view/resources/resources_view.dart';
 import 'package:preprx/view/splash/splash.dart';
 import 'package:preprx/view/splash/splash2.dart';
 
@@ -47,6 +52,7 @@ class AppRoutes {
   static const resetPassword = '/resetpassword';
   static const studyOption = '/study-option';
   static const host = '/host';
+  static const studyZone = '/study-zone';
   static const studyZoneALlTopics = '/study-zone-all-topics';
   static const studyZonePharmacology = '/study-zone-pharmacology';
   static const studyZoneBehavioralHealth = '/study-zone-behavioral-health';
@@ -80,6 +86,10 @@ class AppRoutes {
   static const subliminalStudy = '/subliminal-study';
   static const manifestationCalendar = '/manifestation-calendar';
   static const addAffirmation = '/add-affirmation';
+  static const progress = '/progress';
+  static const treatmentPlan = '/treatment-plan';
+  static const resources = '/resources';
+  static const profile = '/profile';
 }
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -103,6 +113,10 @@ final goRouter = GoRouter(
       builder: (context, state) => StudyOptionView(),
     ),
     GoRoute(path: AppRoutes.host, builder: (context, state) => HostView()),
+    GoRoute(
+      path: AppRoutes.studyZone,
+      builder: (context, state) => StudyZoneView(),
+    ),
     GoRoute(
       path: AppRoutes.studyZoneALlTopics,
       builder: (context, state) => StudyZoneALlTopicsView(),
@@ -218,6 +232,22 @@ final goRouter = GoRouter(
     GoRoute(
       path: AppRoutes.addAffirmation,
       builder: (context, state) => AddAffirmationView(),
+    ),
+    GoRoute(
+      path: AppRoutes.progress,
+      builder: (context, state) => ProgressView(),
+    ),
+    GoRoute(
+      path: AppRoutes.treatmentPlan,
+      builder: (context, state) => TreatmentPlanView(),
+    ),
+    GoRoute(
+      path: AppRoutes.resources,
+      builder: (context, state) => ResourcesView(),
+    ),
+    GoRoute(
+      path: AppRoutes.profile,
+      builder: (context, state) => ProfileView(),
     ),
   ],
 );

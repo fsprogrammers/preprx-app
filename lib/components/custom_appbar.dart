@@ -63,7 +63,9 @@ Widget customAppBar({
           isProfile == true
               ? iconButton(
                   icon: AppImages.person,
-                  onPressed: () {},
+                  onPressed: () {
+                    goRouter.push(AppRoutes.profile);
+                  },
                   containerHeight: 32,
                   containerWidth: 32,
                   width: 18,

@@ -5,6 +5,7 @@ import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/components/custom_text.dart';
 import 'package:preprx/utils/app_assets.dart';
 import 'package:preprx/utils/app_colors.dart';
+import 'package:preprx/utils/app_routes.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -46,27 +47,37 @@ class CustomDrawer extends StatelessWidget {
                       _buildDrawerTile(
                         assetName: AppImages.calendar,
                         title: "Manifestation Calendar",
-                        onTap: () {},
+                        onTap: () {
+                          goRouter.push(AppRoutes.manifestationCalendar);
+                        },
                       ),
                       _buildDrawerTile(
                         assetName: AppImages.studyzone,
                         title: "Study Zone",
-                        onTap: () {},
+                        onTap: () {
+                          goRouter.push(AppRoutes.studyZone);
+                        },
                       ),
                       _buildDrawerTile(
                         assetName: AppImages.flagged,
                         title: "Flagged Questions",
-                        onTap: () {},
+                        onTap: () {
+                          // goRouter.push(AppRoutes.studyZone);
+                        },
                       ),
                       _buildDrawerTile(
                         assetName: AppImages.flash,
                         title: "Flash Cards",
-                        onTap: () {},
+                        onTap: () {
+                          goRouter.push(AppRoutes.studyZoneFlashcards);
+                        },
                       ),
                       _buildDrawerAssetTile(
                         assetPath: AppImages.dose,
                         title: "Resources Rx",
-                        onTap: () {},
+                        onTap: () {
+                          goRouter.push(AppRoutes.resources);
+                        },
                       ),
                       _buildDrawerTile(
                         assetName: AppImages.help,

@@ -81,6 +81,13 @@ class AppImages {
   //scription space
   static String tick = 'assets/images/tick.svg';
 
+  //treatment plan
+  static String medsurg = 'assets/images/medsurg.svg';
+  static String pharma = 'assets/images/pharma.svg';
+  static String milestone = 'assets/images/milestone.svg';
+  static String questions = 'assets/images/questions.svg';
+  static String streak = 'assets/images/streak.svg';
+
   //navbar
   static String homeFill = 'assets/images/homefill.svg';
   static String homeOutline = 'assets/images/homeoutline.svg';

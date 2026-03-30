@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:preprx/utils/app_assets.dart';
 import 'package:preprx/utils/app_colors.dart';
 import 'package:preprx/view/home/home_view.dart';
+import 'package:preprx/view/progress/progress_view.dart';
 import 'package:preprx/view/strategy_zone/strategy_zone_view.dart';
 import 'package:preprx/view/study_zone/study_zone_view.dart';
 
@@ -27,7 +28,7 @@ class _HostViewState extends State<HostView> {
     const StrategyZoneView(), // Strategy Zone placeholder
     const CommunityView(), // Community View
     const MindRxView(), // Mind Rx view
-    const SizedBox(), // Progress placeholder
+    const ProgressView(), // Progress placeholder
   ];
 
   @override
@@ -36,7 +37,6 @@ class _HostViewState extends State<HostView> {
       extendBody: true,
       body: _screens[_currentIndex],
       bottomNavigationBar: Container(
-        padding: EdgeInsets.only(bottom: 24.h, top: 12.h),
         decoration: BoxDecoration(
           color: AppColors.teal,
           borderRadius: BorderRadius.only(
@@ -106,30 +106,33 @@ class _HostViewState extends State<HostView> {
         });
       },
       behavior: HitTestBehavior.opaque,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SvgPicture.asset(
-            isSelected ? fillAsset : outlineAsset,
-            width: isSelected ? 24.w : 18.w,
-            height: isSelected ? 24.h : 18.h,
-            colorFilter: ColorFilter.mode(
-              isSelected ? AppColors.gold : Colors.white,
-              BlendMode.srcIn,
-            ),
-          ),
-          if (isSelected) ...[
-            SizedBox(height: 4.h),
-            Text(
-              label,
-              style: GoogleFonts.inter(
-                color: AppColors.gold,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 24.h, top: 12.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.asset(
+              isSelected ? fillAsset : outlineAsset,
+              width: isSelected ? 24.w : 18.w,
+              height: isSelected ? 24.h : 18.h,
+              colorFilter: ColorFilter.mode(
+                isSelected ? AppColors.gold : Colors.white,
+                BlendMode.srcIn,
               ),
             ),
+            if (isSelected) ...[
+              SizedBox(height: 4.h),
+              Text(
+                label,
+                style: GoogleFonts.inter(
+                  color: AppColors.gold,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }

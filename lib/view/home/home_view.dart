@@ -7,12 +7,10 @@ import 'package:preprx/components/custom_drawer.dart';
 import 'package:preprx/components/custom_gradient_background.dart';
 import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/components/custom_text.dart';
-import 'package:preprx/components/custom_toplogo.dart';
 import 'package:preprx/utils/app_assets.dart';
 import 'package:preprx/utils/app_colors.dart';
 import 'package:preprx/view/home/widget/build_card.dart';
 import 'package:preprx/view/home/widget/build_tag.dart';
-import 'package:preprx/view/home/widget/icon_button.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -20,7 +18,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.transparent,
       drawer: const CustomDrawer(),
       body: GradientBackground(
         child: SafeArea(

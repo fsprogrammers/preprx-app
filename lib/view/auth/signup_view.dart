@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:preprx/components/custom_gradient_background.dart';
 import 'package:preprx/components/custom_spacer.dart';
+import 'package:preprx/services/validation_services.dart';
 import 'package:preprx/utils/app_routes.dart';
+import 'package:preprx/view_model/auth/auth_view_model.dart';
 import '../../components/custom_button.dart';
 import '../../components/custom_checkbox.dart';
 import '../../components/custom_text.dart';
@@ -12,19 +15,78 @@ import '../../components/custom_textfield.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_colors.dart';
 
-class SignupView extends StatelessWidget {
+class SignupView extends ConsumerStatefulWidget {
   const SignupView({super.key});
 
   @override
+  ConsumerState<SignupView> createState() => _SignupViewState();
+}
+
+class _SignupViewState extends ConsumerState<SignupView> {
+  final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  bool _rememberMe = false;
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _onSignupPressed() async {
+    final isValid = _formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
+
+    final ok = await ref
+        .read(authViewModelProvider.notifier)
+        .register(
+          username: _usernameController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+          confirmPassword: _confirmPasswordController.text,
+        );
+
+    if (!mounted) return;
+
+    final state = ref.read(authViewModelProvider);
+    if (ok) {
+      final message = state.registerResponse?.message.isNotEmpty == true
+          ? state.registerResponse!.message
+          : 'Account created successfully';
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+      goRouter.go(AppRoutes.login);
+      return;
+    }
+
+    final error = (state.errorMessage ?? 'Unable to create account')
+        .replaceFirst('Exception: ', '')
+        .replaceFirst('FetchDataException: ', '')
+        .trim();
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authViewModelProvider);
+
     return Scaffold(
       body: GradientBackground(
         child: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: Column(
-                children: [
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
                   // Logo Box
                   ClipRRect(borderRadius: BorderRadiusGeometry.circular(12.r),
                  
@@ -68,9 +130,11 @@ class SignupView extends StatelessWidget {
 
                   // Text Fields
                   CustomTextField(
+                    controller: _usernameController,
                     width: double.infinity,
                     hintText: "user name",
                     hintFontSize: 16,
+                    validator: ValidationService.instance.username,
 
                     prefixIcon: Icons.person_outline,
                     borderColor: Colors.transparent,
@@ -80,9 +144,11 @@ class SignupView extends StatelessWidget {
                   verticalSpacer(height: 12),
 
                   CustomTextField(
+                    controller: _emailController,
                     width: double.infinity,
                     hintText: "mail",
                     hintFontSize: 16,
+                    validator: ValidationService.instance.email,
                     prefixIcon: Icons.mail_outline,
                     borderColor: Colors.transparent,
                     fillColor: Colors.white,
@@ -91,9 +157,11 @@ class SignupView extends StatelessWidget {
                   verticalSpacer(height: 12),
 
                   CustomTextField(
+                    controller: _passwordController,
                     width: double.infinity,
                     hintText: "password",
                     hintFontSize: 16,
+                    validator: ValidationService.instance.password,
                     prefixIcon: Icons.lock_outline,
                     isPasswordField: true,
                     borderColor: Colors.transparent,
@@ -103,9 +171,14 @@ class SignupView extends StatelessWidget {
                   verticalSpacer(height: 12),
 
                   CustomTextField(
+                    controller: _confirmPasswordController,
                     width: double.infinity,
                     hintText: "Confirm Password",
                     hintFontSize: 16,
+                    validator: (value) => ValidationService.instance.confirmPassword(
+                      value,
+                      _passwordController,
+                    ),
                     prefixIcon: Icons.lock_outline,
                     isPasswordField: true,
                     borderColor: Colors.transparent,
@@ -126,8 +199,12 @@ class SignupView extends StatelessWidget {
                         width: 24.w,
                         height: 24.h,
                         child: CustomCheckBox(
-                          value: false,
-                          onChanged: (val) {},
+                          value: _rememberMe,
+                          onChanged: (val) {
+                            setState(() {
+                              _rememberMe = val ?? false;
+                            });
+                          },
                         ),
                       ),
                       SizedBox(width: 8.w),
@@ -147,6 +224,7 @@ class SignupView extends StatelessWidget {
                     context: context,
                     text: "Sign up",
                     fontSize: 16,
+                    isLoading: authState.isLoading,
                     height: 52,
                     borderColor: Colors.transparent,
                     bgColor: AppColors.gold,
@@ -154,10 +232,7 @@ class SignupView extends StatelessWidget {
                     borderRadius: 20,
                     isCircular: false,
                     fontWeight: FontWeight.w600,
-                    onPressed: () {
-                      goRouter.go(AppRoutes.studyOption);
-
-                    },
+                    onPressed: _onSignupPressed,
                   ),
 
                   verticalSpacer(height: 16),
@@ -210,7 +285,8 @@ class SignupView extends StatelessWidget {
                   ),
 
                   verticalSpacer(height: 30),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

@@ -300,8 +300,10 @@ class NetworkApiServices extends BaseApiServices {
         throw InternetException('No Internet connection');
       case DioExceptionType.badResponse:
       case DioExceptionType.badCertificate:
-        // Handle bad response
-        break;
+        if (e.response != null) {
+          returnResponse(e.response!);
+        }
+        throw FetchDataException('Unexpected server response');
       case DioExceptionType.cancel:
         throw FetchDataException('Request cancelled');
       case DioExceptionType.unknown:

@@ -8,7 +8,6 @@ import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/components/custom_text.dart';
 import 'package:preprx/utils/app_assets.dart';
 import 'package:preprx/utils/app_colors.dart';
-import 'package:preprx/utils/app_routes.dart';
 
 class BehavioralTopic {
   final String title;

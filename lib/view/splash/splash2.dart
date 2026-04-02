@@ -5,7 +5,6 @@ import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/utils/app_colors.dart';
 import 'package:preprx/utils/app_routes.dart';
 import 'package:preprx/view/splash/widget/build_tile_container.dart';
-import 'dart:math' as math;
 import '../../components/custom_text.dart';
 import '../../components/custom_button.dart';
 import '../../utils/app_assets.dart';

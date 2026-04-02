@@ -281,31 +281,4 @@ class _StrategyZoneEliminationViewState
       ),
     );
   }
-
-  Widget _buildSlidePlaceholder(String title) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 32.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: customText(
-              text: title,
-              fontWeight: FontWeight.w700,
-              fontSize: 18,
-              color: AppColors.charcoal,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          verticalSpacer(height: 24),
-          customText(
-            text: "Content strategy goes here.",
-            fontWeight: FontWeight.w400,
-            fontSize: 14,
-            color: AppColors.bodytext,
-          ),
-        ],
-      ),
-    );
-  }
-}
+    }

@@ -186,8 +186,7 @@ class _ManifestationCalendarViewState extends State<ManifestationCalendarView> {
                   children: [
                     customText(
                       text:
-                          _getMonthName(currentMonth.month) +
-                          " ${currentMonth.year}",
+                          "${_getMonthName(currentMonth.month)} ${currentMonth.year}",
                       fontWeight: FontWeight.w700,
                       fontSize: 16,
                       color: Colors.white,

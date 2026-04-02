@@ -1,42 +1,44 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 import 'package:preprx/services/data/app_exception.dart';
 import 'package:preprx/services/data/base_api_services.dart';
 
 class NetworkApiServices extends BaseApiServices {
-  final http.Client _client;
+  late final Dio _dio;
 
-  NetworkApiServices() : _client = http.Client();
+  NetworkApiServices() {
+    _dio = Dio(
+      BaseOptions(
+        connectTimeout: const Duration(seconds: 60),
+        receiveTimeout: const Duration(seconds: 60),
+      ),
+    );
+  }
 
   @override
   Future<dynamic> getApi(String url, String? token) async {
     dynamic responseJson;
 
     try {
-      final uri = Uri.parse(url);
-      final request = http.Request('GET', uri)
-        ..headers['Accept'] = 'application/json';
-      if (token != null) {
-        request.headers['Authorization'] = 'Bearer ${token.trim()}';
-      }
+      final response = await _dio.get(
+        url,
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            if (token != null) 'Authorization': 'Bearer ${token.trim()}',
+          },
+        ),
+      );
 
-      final response = await _client
-          .send(request)
-          .timeout(
-            const Duration(seconds: 60),
-            onTimeout: () => throw RequestTimeOutException('Request timed out'),
-          );
-
-      final httpResponse = await http.Response.fromStream(response);
-
-      responseJson = returnResponse(httpResponse);
-    } on SocketException {
-      throw InternetException('No Internet connection');
+      responseJson = returnResponse(response);
+    } on DioException catch (e) {
+      _handleDioException(e);
     } on AppExceptions {
-      rethrow; // ✅ Never swallow typed exceptions (e.g. TokenExpiredException)
+      rethrow;
     } catch (e) {
       throw FetchDataException('$e');
     }
@@ -69,37 +71,27 @@ class NetworkApiServices extends BaseApiServices {
     dynamic responseJson;
 
     try {
-      final uri = Uri.parse(url);
-
       if (isJson) {
-        final response = await _client
-            .post(
-              uri,
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                if (token != null) 'Authorization': 'Bearer ${token.trim()}',
-              },
-              body: jsonEncode(data),
-            )
-            .timeout(
-              const Duration(seconds: 60),
-              onTimeout: () =>
-                  throw RequestTimeOutException('Request timed out'),
-            );
+        final response = await _dio.post(
+          url,
+          data: jsonEncode(data),
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              if (token != null) 'Authorization': 'Bearer ${token.trim()}',
+            },
+          ),
+        );
 
         responseJson = returnResponse(response);
       } else if (files != null && files.isNotEmpty) {
-        final request = http.MultipartRequest('POST', uri)
-          ..headers['Accept'] = 'application/json';
-        if (token != null) {
-          request.headers['Authorization'] = 'Bearer ${token.trim()}';
-        }
+        final formData = FormData();
 
         // Add text fields
         if (data is Map) {
           data.forEach((key, value) {
-            request.fields[key] = value.toString();
+            formData.fields.add(MapEntry(key, value.toString()));
             log("Adding text field: $key = $value");
           });
         }
@@ -117,59 +109,52 @@ class NetworkApiServices extends BaseApiServices {
           final fieldName = fileFields != null && i < fileFields.length
               ? fileFields[i]
               : 'image_$i';
-          final fileStream = http.ByteStream(file.openRead());
-          final fileLength = await file.length();
-          final multipartFile = http.MultipartFile(
-            fieldName,
-            fileStream,
-            fileLength,
-            filename: file.path.split('/').last,
 
-            contentType: http.MediaType(
-              'image',
-              'jpeg',
-            ), // Adjust based on API requirements
+          formData.files.add(
+            MapEntry(
+              fieldName,
+              await MultipartFile.fromFile(
+                file.path,
+                filename: file.path.split('/').last,
+              ),
+            ),
           );
-          request.files.add(multipartFile);
           log("Adding file field: $fieldName = ${file.path}");
         }
 
-        final response = await _client
-            .send(request)
-            .timeout(
-              const Duration(seconds: 60),
-              onTimeout: () =>
-                  throw RequestTimeOutException('Request timed out'),
-            );
+        final response = await _dio.post(
+          url,
+          data: formData,
+          options: Options(
+            headers: {
+              'Accept': 'application/json',
+              if (token != null) 'Authorization': 'Bearer ${token.trim()}',
+            },
+          ),
+        );
 
-        final httpResponse = await http.Response.fromStream(response);
-
-        responseJson = returnResponse(httpResponse);
+        responseJson = returnResponse(response);
       } else {
-        final response = await _client
-            .post(
-              uri,
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json',
-                if (token != null) 'Authorization': 'Bearer ${token.trim()}',
-              },
-              body: data is Map
-                  ? data.map((k, v) => MapEntry(k, v.toString()))
-                  : data,
-            )
-            .timeout(
-              const Duration(seconds: 60),
-              onTimeout: () =>
-                  throw RequestTimeOutException('Request timed out'),
-            );
+        final response = await _dio.post(
+          url,
+          data: data is Map
+              ? data.map((k, v) => MapEntry(k, v.toString()))
+              : data,
+          options: Options(
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json',
+              if (token != null) 'Authorization': 'Bearer ${token.trim()}',
+            },
+          ),
+        );
 
         responseJson = returnResponse(response);
       }
-    } on SocketException {
-      throw InternetException('No Internet connection');
+    } on DioException catch (e) {
+      _handleDioException(e);
     } on AppExceptions {
-      rethrow; // ✅ Never swallow typed exceptions
+      rethrow;
     } catch (e) {
       throw FetchDataException('$e');
     }
@@ -196,33 +181,29 @@ class NetworkApiServices extends BaseApiServices {
     dynamic responseJson;
 
     try {
-      final uri = Uri.parse(url);
-      final response = await _client
-          .put(
-            uri,
-            headers: {
-              'Content-Type': isJson
-                  ? 'application/json'
-                  : 'application/x-www-form-urlencoded',
-              'Accept': 'application/json',
-              if (token != null) 'Authorization': 'Bearer ${token.trim()}',
-            },
-            body: isJson
-                ? jsonEncode(data)
-                : data is Map
-                ? data.map((k, v) => MapEntry(k, v.toString()))
-                : data,
-          )
-          .timeout(
-            const Duration(seconds: 60),
-            onTimeout: () => throw RequestTimeOutException('Request timed out'),
-          );
+      final response = await _dio.put(
+        url,
+        data: isJson
+            ? jsonEncode(data)
+            : data is Map
+            ? data.map((k, v) => MapEntry(k, v.toString()))
+            : data,
+        options: Options(
+          headers: {
+            'Content-Type': isJson
+                ? 'application/json'
+                : 'application/x-www-form-urlencoded',
+            'Accept': 'application/json',
+            if (token != null) 'Authorization': 'Bearer ${token.trim()}',
+          },
+        ),
+      );
 
       responseJson = returnResponse(response);
-    } on SocketException {
-      throw InternetException('No Internet connection');
+    } on DioException catch (e) {
+      _handleDioException(e);
     } on AppExceptions {
-      rethrow; // ✅ Never swallow typed exceptions
+      rethrow;
     } catch (e) {
       throw FetchDataException('$e');
     }
@@ -240,26 +221,21 @@ class NetworkApiServices extends BaseApiServices {
     dynamic responseJson;
 
     try {
-      final uri = Uri.parse(url);
-
-      final response = await _client
-          .delete(
-            uri,
-            headers: {
-              'Accept': 'application/json',
-              if (token != null) 'Authorization': 'Bearer ${token.trim()}',
-            },
-          )
-          .timeout(
-            const Duration(seconds: 60),
-            onTimeout: () => throw RequestTimeOutException('Request timed out'),
-          );
+      final response = await _dio.delete(
+        url,
+        options: Options(
+          headers: {
+            'Accept': 'application/json',
+            if (token != null) 'Authorization': 'Bearer ${token.trim()}',
+          },
+        ),
+      );
 
       responseJson = returnResponse(response);
-    } on SocketException {
-      throw InternetException('No Internet connection');
+    } on DioException catch (e) {
+      _handleDioException(e);
     } on AppExceptions {
-      rethrow; // ✅ Never swallow typed exceptions
+      rethrow;
     } catch (e) {
       throw FetchDataException('$e');
     }
@@ -271,13 +247,13 @@ class NetworkApiServices extends BaseApiServices {
     return responseJson;
   }
 
-  dynamic returnResponse(http.Response response) {
+  dynamic returnResponse(Response response) {
     dynamic responseJson;
     try {
-      responseJson = jsonDecode(response.body);
-      log("Full response JSON: $responseJson"); // Debug full response
+      responseJson = response.data;
+      log("Full response JSON: $responseJson");
     } catch (e) {
-      throw FetchDataException('Failed to response: ${response.body}');
+      throw FetchDataException('Failed to parse response: ${response.data}');
     }
 
     switch (response.statusCode) {
@@ -311,6 +287,25 @@ class NetworkApiServices extends BaseApiServices {
         );
       default:
         throw FetchDataException(responseJson['message'] ?? '');
+    }
+  }
+
+  void _handleDioException(DioException e) {
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        throw RequestTimeOutException('Request timed out');
+      case DioExceptionType.connectionError:
+        throw InternetException('No Internet connection');
+      case DioExceptionType.badResponse:
+      case DioExceptionType.badCertificate:
+        // Handle bad response
+        break;
+      case DioExceptionType.cancel:
+        throw FetchDataException('Request cancelled');
+      case DioExceptionType.unknown:
+        throw FetchDataException(e.toString());
     }
   }
 }

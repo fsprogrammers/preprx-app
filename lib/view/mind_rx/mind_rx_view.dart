@@ -383,6 +383,7 @@ class _MindRxViewState extends ConsumerState<MindRxView> {
 
 
 
+
 }
 
 class _EmojiThumbShape extends SliderComponentShape {

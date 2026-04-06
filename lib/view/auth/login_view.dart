@@ -7,6 +7,7 @@ import 'package:preprx/components/custom_gradient_background.dart';
 import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/services/validation_services.dart';
 import 'package:preprx/utils/app_routes.dart';
+import 'package:preprx/utils/app_toast.dart';
 import 'package:preprx/view_model/auth/auth_view_model.dart';
 import '../../components/custom_button.dart';
 import '../../components/custom_checkbox.dart';
@@ -51,7 +52,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
           ? state.loginResponse!.message
           : 'Login successful';
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+           CustomToast.success(msg: message);
+
       goRouter.go(AppRoutes.studyOption);
       return;
     }
@@ -61,7 +63,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
         .replaceFirst('FetchDataException: ', '')
         .trim();
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+           CustomToast.error(msg: error);
+
+
   }
 
   @override
@@ -193,6 +197,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                     isCircular: false,
                     fontWeight: FontWeight.w600,
                     onPressed: _onLoginPressed,
+              
                   ),
 
                   verticalSpacer(height: 16),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:preprx/components/custom_appbar.dart';
 import 'package:preprx/components/custom_buildtile_icon.dart';
@@ -11,12 +12,19 @@ import 'package:preprx/utils/app_assets.dart';
 import 'package:preprx/utils/app_colors.dart';
 import 'package:preprx/view/home/widget/build_card.dart';
 import 'package:preprx/view/home/widget/build_tag.dart';
+import 'package:preprx/view_model/study_option/study_option_view_model.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final studyOptionState = ref.watch(studyOptionViewModelProvider);
+    final selectedTitles = studyOptionState.topics
+        .where((topic) => studyOptionState.selectedTopicIds.contains(topic.id))
+        .map((topic) => topic.title)
+        .toList();
+
     return Scaffold(
       drawer: const CustomDrawer(),
       body: GradientBackground(
@@ -150,13 +158,16 @@ class HomeView extends StatelessWidget {
                                     verticalSpacer(height: 12),
 
                                     // Tags
-                                    Row(
-                                      children: [
-                                        buildTag("Pharmacology"),
-                                        horizontalSpacer(width: 10),
-                                        buildTag("Pediatrics"),
-                                      ],
-                                    ),
+                                    if (selectedTitles.isEmpty)
+                                      buildTag("No growth zone selected")
+                                    else
+                                      Wrap(
+                                        spacing: 10.w,
+                                        runSpacing: 10.h,
+                                        children: selectedTitles
+                                            .map(buildTag)
+                                            .toList(),
+                                      ),
 
                                     verticalSpacer(height: 20),
 

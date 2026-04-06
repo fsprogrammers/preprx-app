@@ -7,6 +7,7 @@ import 'package:preprx/components/custom_gradient_background.dart';
 import 'package:preprx/components/custom_spacer.dart';
 import 'package:preprx/services/validation_services.dart';
 import 'package:preprx/utils/app_routes.dart';
+import 'package:preprx/utils/app_toast.dart';
 import 'package:preprx/view_model/auth/auth_view_model.dart';
 import '../../components/custom_button.dart';
 import '../../components/custom_checkbox.dart';
@@ -60,7 +61,7 @@ class _SignupViewState extends ConsumerState<SignupView> {
           ? state.registerResponse!.message
           : 'Account created successfully';
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+          CustomToast.success(msg: message);
       goRouter.go(AppRoutes.login);
       return;
     }

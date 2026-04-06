@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:preprx/components/custom_appbar.dart';
@@ -9,20 +10,65 @@ import 'package:preprx/components/custom_text.dart';
 import 'package:preprx/utils/app_assets.dart';
 import 'package:preprx/utils/app_colors.dart';
 import 'package:preprx/utils/app_routes.dart';
+import 'package:preprx/utils/app_toast.dart';
 import 'package:preprx/view/home/widget/build_card.dart';
+import 'package:preprx/view_model/auth/auth_view_model.dart';
+import 'package:preprx/view_model/mind_rx/mind_rx_view_model.dart';
 
-class MindRxView extends StatefulWidget {
+class MindRxView extends ConsumerStatefulWidget {
   const MindRxView({super.key});
 
   @override
-  State<MindRxView> createState() => _MindRxViewState();
+  ConsumerState<MindRxView> createState() => _MindRxViewState();
 }
 
-class _MindRxViewState extends State<MindRxView> {
-  double _moodValue = 0.5;
+class _MindRxViewState extends ConsumerState<MindRxView> {
+  double _moodValue = 50;
+
+  String? get _token =>
+      ref.read(authViewModelProvider).loginResponse?.token?.trim();
+
+  Future<void> _submitMoodCheckIn() async {
+    final ok = await ref
+        .read(mindRxViewModelProvider.notifier)
+        .submitMoodCheckIn(token: _token, moodValue: _moodValue.round());
+
+    if (!mounted) return;
+
+    final state = ref.read(mindRxViewModelProvider);
+    final successMessage = state.successMessage?.trim().isNotEmpty == true
+        ? state.successMessage!.trim()
+        : 'Mood check-in recorded! Stay focused.';
+
+    if (ok) {
+      CustomToast.success(msg: successMessage);
+      return;
+    }
+
+    final error =
+        (state.errorMessage ?? 'Failed to submit mood. Please try again.')
+            .replaceFirst('Exception: ', '')
+            .replaceFirst('FetchDataException: ', '')
+            .trim();
+
+    final normalized = error.toLowerCase();
+    final alreadyCheckedIn =
+        normalized.contains('already') &&
+        (normalized.contains('check') || normalized.contains('today'));
+
+    if (alreadyCheckedIn) {
+      CustomToast.info(
+        msg: "You've already checked in today. See you tomorrow!",
+      );
+    } else {
+      CustomToast.error(msg: error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final mindRxState = ref.watch(mindRxViewModelProvider);
+
     return Scaffold(
       body: GradientBackground(
         child: SafeArea(
@@ -91,7 +137,7 @@ class _MindRxViewState extends State<MindRxView> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     customText(
-                                      text: "Relexed",
+                                      text: "Relaxed (${_moodValue.round()}%)",
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14,
                                       color: const Color(0xFF0C4866),
@@ -105,6 +151,63 @@ class _MindRxViewState extends State<MindRxView> {
                                   ],
                                 ),
                               ),
+                              verticalSpacer(height: 12),
+                              if (!mindRxState.hasCheckedInToday)
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: mindRxState.isSubmittingMood
+                                        ? null
+                                        : _submitMoodCheckIn,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.teal,
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          12.r,
+                                        ),
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 12.h,
+                                      ),
+                                      elevation: 0,
+                                    ),
+                                    child: mindRxState.isSubmittingMood
+                                        ? SizedBox(
+                                            width: 18.w,
+                                            height: 18.w,
+                                            child:
+                                                const CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  color: Colors.white,
+                                                ),
+                                          )
+                                        : customText(
+                                            text: 'Submit Check-in',
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14,
+                                            color: Colors.white,
+                                          ),
+                                  ),
+                                )
+                              else
+                                Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.teal.withValues(
+                                      alpha: 0.12,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.r),
+                                  ),
+                                  child: customText(
+                                    text: 'Today\'s check-in completed',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    color: AppColors.teal,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
                             ],
                           ),
                         ),
@@ -149,7 +252,7 @@ class _MindRxViewState extends State<MindRxView> {
                         Row(
                           children: [
                             Expanded(
-                              child: _buildGridItem(
+                              child: buildGridItem(
                                 icon: AppImages.brain,
                                 title: "Visualization room",
                                 desc: "Mini meditations for calm focus",
@@ -160,7 +263,7 @@ class _MindRxViewState extends State<MindRxView> {
                             ),
                             horizontalSpacer(width: 16),
                             Expanded(
-                              child: _buildGridItem(
+                              child: buildGridItem(
                                 icon: AppImages.scription,
                                 title: "Scripting space",
                                 desc: "Journaling prompts for your journey",
@@ -175,7 +278,7 @@ class _MindRxViewState extends State<MindRxView> {
                         Row(
                           children: [
                             Expanded(
-                              child: _buildGridItem(
+                              child: buildGridItem(
                                 icon: AppImages.subliminal,
                                 title: "Subliminal Study Mode",
                                 desc: "Background +ve affirmations",
@@ -186,12 +289,14 @@ class _MindRxViewState extends State<MindRxView> {
                             ),
                             horizontalSpacer(width: 16),
                             Expanded(
-                              child: _buildGridItem(
+                              child: buildGridItem(
                                 icon: AppImages.calendar,
                                 title: "Manifestation Calendar",
                                 desc: "Gratitude, Reflection, Focus",
                                 onTap: () {
-                                  goRouter.push(AppRoutes.manifestationCalendar);
+                                  goRouter.push(
+                                    AppRoutes.manifestationCalendar,
+                                  );
                                 },
                               ),
                             ),
@@ -212,6 +317,8 @@ class _MindRxViewState extends State<MindRxView> {
   }
 
   Widget _buildMoodSlider() {
+    final mindRxState = ref.watch(mindRxViewModelProvider);
+
     return SliderTheme(
       data: SliderThemeData(
         trackHeight: 12.h,
@@ -226,16 +333,22 @@ class _MindRxViewState extends State<MindRxView> {
       ),
       child: Slider(
         value: _moodValue,
-        onChanged: (value) {
-          setState(() {
-            _moodValue = value;
-          });
-        },
+        min: 0,
+        max: 100,
+        divisions: 100,
+        onChanged:
+            (mindRxState.isSubmittingMood || mindRxState.hasCheckedInToday)
+            ? null
+            : (value) {
+                setState(() {
+                  _moodValue = value;
+                });
+              },
       ),
     );
   }
 
-  Widget _buildGridItem({
+  Widget buildGridItem({
     required String icon,
     required String title,
     required String desc,
@@ -261,12 +374,15 @@ class _MindRxViewState extends State<MindRxView> {
             fontWeight: FontWeight.w400,
             fontSize: 14,
             color: AppColors.bodytext,
-            maxLine: 3,
+            maxLine: 2,
           ),
         ],
       ),
     );
   }
+
+
+
 }
 
 class _EmojiThumbShape extends SliderComponentShape {

@@ -95,7 +95,9 @@ class CustomDrawer extends StatelessWidget {
                       _buildDrawerTile(
                         assetName: AppImages.logout,
                         title: "Log out",
-                        onTap: () {},
+                        onTap: () {
+                          goRouter.go(AppRoutes.login);
+                        },
                       ),
 
                       verticalSpacer(height: 32),
